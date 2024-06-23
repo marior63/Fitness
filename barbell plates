@@ -1,0 +1,42 @@
+def calculate_plates(target_weight):
+    barbell_weight = 45
+    
+    plates = [45, 25, 10, 5, 2.5]
+    
+    required_weight = (target_weight - barbell_weight) / 2
+    
+    if required_weight < 0:
+        return "Target weight is less than the weight of the barbell."
+
+    plate_count = {plate: 0 for plate in plates}
+    
+    for plate in plates:
+        if required_weight >= plate:
+            count = required_weight // plate
+            plate_count[plate] = int(count)
+            required_weight -= plate * count
+    
+    return plate_count
+
+def display_plates(plate_count):
+    print("Plates needed on each side of the barbell:")
+    for plate, count in plate_count.items():
+        if count > 0:
+            print(f"{count} x {plate} lbs plate(s)")
+
+def main():
+    while True:
+        target_weight = float(input("Enter the target weight (lbs): "))
+        plate_count = calculate_plates(target_weight)
+    
+        if isinstance(plate_count, str):
+            print(plate_count)
+        else:
+            display_plates(plate_count)
+
+        repeat = input("Do you want to calculate again? (yes/no): ").strip().lower()
+        if repeat != 'yes':
+            break
+
+if __name__ == "__main__":
+    main()
